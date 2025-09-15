@@ -1,0 +1,15 @@
+# Environment variables
+.env
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# SQLite database (if you don’t want to commit it)
+*.db
+
+# VS Code settings
+.vscode/
