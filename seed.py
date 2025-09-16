@@ -1,7 +1,7 @@
 import csv
 from sqlalchemy.orm import Session
-from database import engine
-from models import State, City, Zipcode
+from app.database import engine
+from app.models import State, City, Zipcode
 
 session = Session(bind=engine)
 

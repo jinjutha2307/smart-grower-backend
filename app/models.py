@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date
 from sqlalchemy.orm import relationship
-from database import Base
+from app.database import Base
 
 class State(Base):
     __tablename__ = "states"
@@ -31,3 +31,28 @@ class Zipcode(Base):
 
     # Many zipcodes to one city relationship
     city = relationship("City", back_populates="zipcodes")
+
+
+class GrowersData(Base):
+    __tablename__ = "growers_data"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    grower_id = Column(String, unique=True, index=True, nullable=False)
+    citizen_id = Column(String, unique=True, index=True, nullable=False)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    gender = Column(String, nullable=False)
+    citizen_id_issue_date = Column(Date, nullable=False)
+    citizen_id_expiry_date = Column(Date, nullable=False)
+    citizen_birth_date = Column(Date, nullable=False)
+    age = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    address = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    zip_code = Column(String, nullable=False)
+    photo_filename = Column(String, nullable=False)
+
+
+
+
