@@ -42,29 +42,30 @@ class GrowerBase(BaseModel):
     address: str = Field(..., alias="address")
     city: str = Field(..., alias="city")
     state: str = Field(..., alias="state")
-    zip_code: str = Field(..., alias="zipCode")
+    zip_code: str = Field(..., alias="zipcode")
     photo: str = Field(..., alias="photo")
 
     class Config:
         populate_by_name = True
+        from_attributes = True
 
 
 class GrowersDataCreate(GrowerBase):
-    
     citizen_id: str = Field(..., alias="citizenId")
     citizen_id_issue_date: date = Field(..., alias="citizenIdIssueDate")
     citizen_id_expiry_date: date = Field(..., alias="citizenIdExpiryDate")
     citizen_birth_date: date = Field(..., alias="citizenBirthDate")
-    age: str = Field(..., alias="age")
+    age: int = Field(..., alias="age")
     
 
     class Config:
         populate_by_name = True # allows backend to use snake_case internally
+        from_attributes = True
     
 
 class GrowersDataRead(GrowerBase):
     id: int   
-    created_at: date
+
 
     class Config:
         from_attributes = True
