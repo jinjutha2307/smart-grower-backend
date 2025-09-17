@@ -1,19 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.database import SessionLocal
+from app.database import get_db
 from app import schemas, crud
 from sqlalchemy.orm import Session
 
-# Dependency to get DB session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 router = APIRouter(
-    prefix="/register",
-    tags=["register"],
+    prefix="/locations",
+    tags=["locations"],
 )
 
 @router.get("/states/{state_id}/cities", response_model=list[schemas.CityBase])
@@ -29,3 +21,5 @@ def read_zipcodes(city_id: int, db: Session = Depends(get_db)):
     if not zips:
         raise HTTPException(status_code=404, detail="No zip codes found")
     return zips
+
+

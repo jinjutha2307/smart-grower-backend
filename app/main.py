@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.database import engine
 from app import models, schemas
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import register
+from app.routers import locations, growers
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -15,4 +15,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(register.router)
+app.include_router(locations.router)
+app.include_router(growers.router)

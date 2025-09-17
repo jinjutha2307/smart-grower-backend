@@ -44,14 +44,14 @@ class GrowersData(Base):
     citizen_id_issue_date = Column(Date, nullable=False)
     citizen_id_expiry_date = Column(Date, nullable=False)
     citizen_birth_date = Column(Date, nullable=False)
-    age = Column(String, nullable=False)
+    age = Column(Integer, nullable=False)
     phone = Column(String, nullable=False)
     email = Column(String, nullable=False)
     address = Column(String, nullable=False)
     state = Column(String, nullable=False)
     city = Column(String, nullable=False)
     zip_code = Column(String, nullable=False)
-    photo_filename = Column(String, nullable=False)
+    photo = Column(String, nullable=False)
 
 
 
