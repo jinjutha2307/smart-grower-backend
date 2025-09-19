@@ -19,8 +19,11 @@ def get_zipcodes(city_id: int, db: Session):
     return zips
 
 async def upload_photo(file: UploadFile = File(...)):
+    if not file.filename.endswith((".jpg", ".jpeg", ".png", ".webp")):
+        raise bad_request(detail="Only JPG, PNG, WEBP files allowed")
     os.makedirs("uploads", exist_ok=True)
     file_path = f"uploads/{file.filename}" #server’s private storage
+
     with open(file_path, "wb") as f:
         f.write(await file.read())
 
