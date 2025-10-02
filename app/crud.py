@@ -48,4 +48,21 @@ def get_grower(db: Session):
     if not growers:
         raise not_found(detail="growers data")
     return growers
+
+def get_grower_by_id(grower_id: str, db: Session):
+    grower = db.query(models.GrowersData).filter(models.GrowersData.grower_id == grower_id).first()
+    if not grower:
+        raise not_found(detail=f"grower's data id {grower_id}")
+    return grower
+
+def update_grower(grower_id: str, grower_update: schemas.GrowersDataUpdate,db: Session):
+    data = db.query(models.GrowersData).filter(models.GrowersData.grower_id == grower_id).first()
+    if not data:
+        raise not_found(detail=f"grower's data id {grower_id}")
     
+    for key, value in grower_update.dict(exclude_unset=True).items():
+        setattr(data, key, value)
+
+    db.commit()
+    db.refresh(data)
+    return data

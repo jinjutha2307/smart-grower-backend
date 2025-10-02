@@ -1,8 +1,13 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from datetime import date
-from typing import List
+from typing import List, Optional
 
-# Simple for drop downs
+
+def to_camel(string: str) -> str:
+    parts = string.split('_')
+    return parts[0] + ''.join(word.capitalize() for word in parts[1:])
+
+
 class ZipCodeBase(BaseModel):
     id: int
     code: str
@@ -32,40 +37,55 @@ class StateWithCities(StateBase):
     cities: List[CityBase] = []
 
 
-class GrowerBase(BaseModel):
-    grower_id: str = Field(..., alias="growerId")
-    first_name: str = Field(..., alias="firstName")
-    last_name: str = Field(..., alias="lastName")
-    gender: str = Field(..., alias="gender")
-    phone: str = Field(..., alias="phone")
-    email: EmailStr = Field(..., alias="email")
-    address: str = Field(..., alias="address")
-    city: str = Field(..., alias="city")
-    state: str = Field(..., alias="state")
-    zip_code: str = Field(..., alias="zipcode")
-    photo: str = Field(..., alias="photo")
+class GrowersDataCreate(BaseModel):
+    grower_id: str 
+    citizen_id: str
+    first_name: str
+    last_name: str
+    gender: str
+    citizen_id_issue_date: date
+    citizen_id_expiry_date: date
+    citizen_birth_date: date
+    age: int
+    phone: str
+    email: EmailStr
+    address: str
+    city: str
+    state: str
+    zip_code: str
+    photo: str
 
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
         from_attributes = True
-
-
-class GrowersDataCreate(GrowerBase):
-    citizen_id: str = Field(..., alias="citizenId")
-    citizen_id_issue_date: date = Field(..., alias="citizenIdIssueDate")
-    citizen_id_expiry_date: date = Field(..., alias="citizenIdExpiryDate")
-    citizen_birth_date: date = Field(..., alias="citizenBirthDate")
-    age: int = Field(..., alias="age")
+    
     
 
-    class Config:
-        populate_by_name = True # allows backend to use snake_case internally
-        from_attributes = True
-    
-
-class GrowersDataRead(GrowerBase):
+class GrowersDataRead(GrowersDataCreate):
     id: int   
+    
 
+
+    
+
+class GrowersDataUpdate(BaseModel):
+    citizen_id : Optional[str] = None
+    first_name : Optional[str] = None
+    last_name : Optional[str] = None
+    gender : Optional[str] = None
+    citizen_id_issue_date : Optional[date] = None
+    citizen_id_expiry_date : Optional[date] = None
+    citizen_birth_date : Optional[date] = None
+    age : Optional[int] = None
+    phone : Optional[str] = None
+    email : Optional[str] = None
+    address : Optional[str] = None
+    state : Optional[str] = None
+    city : Optional[str] = None
+    zip_code : Optional[str] = None
+    photo : Optional[str] = None
 
     class Config:
+        lias_generator = to_camel
         from_attributes = True
